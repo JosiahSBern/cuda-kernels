@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <chrono>
 #include <cuda_runtime.h>
 
 #define M 256
@@ -58,9 +59,8 @@ void init_matrix(float *mat, int rows, int cols){
 
 // Measure execution time
 double get_time(){
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-    return ts.tv_sec + ts.tv_nsec * 1e-9;
+    auto now = std::chrono::steady_clock::now();
+    return std::chrono::duration<double>(now.time_since_epoch()).count();
 }
 
 int main(){
